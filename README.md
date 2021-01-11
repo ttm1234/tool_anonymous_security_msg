@@ -7,6 +7,3 @@ a tool to send security messages on anonymous platform
 
 #### author: 荆哲, ttm1234
 #### version3.1
-
-
-![image](https://github.com/AngelSXD/sxd_first_repository/blob/master/images/20160615165142.png)
