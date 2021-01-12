@@ -31,9 +31,6 @@
         #id-div-placeholder {
             margin-top: 200px;
         }
-        div {
-            overflow-wrap:break-word;
-        }
     </style>
 </head>
 <body>
@@ -48,19 +45,19 @@
                 <div class="alert alert-info">
                     此工具的作用是在匿名平台的两个人互相发送信息而不被他人破解。
                     比如在匿名QQ群里两个匿名发言者发送自己的真实qq号而不暴露给群内其他匿名用户。
-                    此工具使用html网页格式只因使用方便，并不会上传任何数据给任何服务器，从原理上完全保密。
+                    此工具为html网页格式，使用html只因使用方便。此工具不会上传任何数据给任何服务器，从原理上完全保密。
                 </div>
                 <div class="alert alert-info">
                     使用方法如下，比如匿名QQ群里匿名A和匿名B决定加好友而且不在群内暴露两个人的真实身份。
                 </div>
                 <div class="alert alert-info">
                     A打开此工具后，点击下方第一个按钮"我要发送我公钥来邀请别人给我加密后消息"，然后在下面出现的页面里，点击公钥输入框右边的"点我复制公钥",
-                    然后在匿名群里粘贴出这一串乱码文本（以下简称公钥）。
+                    然后在匿名群里粘贴出这一串火星文（以下简称公钥）。
                 </div>
                 <div class="alert alert-info">
                     B在群里得到A发群里的公钥后，也需要打开此工具，然后点击下面的第二个按钮"我收到了别人的公钥要加密我的消息给对方",
                     然后把前面收到的公钥粘贴到下面出现的第一个输入框。在第二个输入框里面输入自己的qq号等隐私消息。
-                    完成后点击右侧的"点我加密"，下方即可显示"加密成功!!!!"字样，再往下就是加密好的乱码文本（以下简称“加密后消息”），
+                    完成后点击右侧的"点我加密"，下方即可显示"加密成功!!!!"字样，再往下就是加密好的火星文（以下简称“加密后消息”），
                     最下面有一键复制按钮，点击复制加密后消息到剪贴板，之后就可以匿名发到群里。
                 </div>
                 <div class="alert alert-info">
@@ -179,8 +176,6 @@
     }
 
     var baseToChinese = function (s, arr) {
-        return s;
-
         let str_decode = window.atob(s)
         // log('str_decode', typeof str_decode, str_decode)
 
@@ -195,9 +190,7 @@
     }
 
     var chineseToBase = function (chis) {
-        chis = chis.trim();
-        return chis;
-
+        chis = chis.trim()
         chis = chis.replace('\r\n', '')
         chis = chis.replace('\n', '')
         chis = chis.replace(' ', '')
@@ -220,7 +213,7 @@
         window.crypto.subtle.generateKey(
             {
                 name: "RSA-OAEP",
-                modulusLength: 2048, // can be 2048, or 4096 or more
+                modulusLength: 1400, //can be 2048, or 4096 or more
                 publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                 hash: {name: "SHA-512"}, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
             },
@@ -270,11 +263,11 @@
 
     refreshKeyPair = function (privateKey, publicKey) {
         log('privateKey----\n', privateKey, '\n\n\n')
-        log('publicKey-----\n', publicKey, '\n\n\n', publicKey.length)
+        log('publicKey-----\n', publicKey, '\n\n\n')
         let privateKeyChinese = baseToChinese(privateKey, arr_kawayi)
         let publicKeyChinese = baseToChinese(publicKey, arr_kawayi)
         log('privateKeyChinese----\n', privateKeyChinese, '\n\n')
-        log('publicKeyChinese-----\n', publicKeyChinese, '\n\n', publicKeyChinese.length)
+        log('publicKeyChinese-----\n', publicKeyChinese, '\n', publicKeyChinese.length, '\n')
         document.getElementById("id-privkey").value = privateKeyChinese;
         document.getElementById("id-pubkey").value = publicKeyChinese;
     }

@@ -6,4 +6,4 @@ a tool to send security messages on anonymous platform
 采用rsa非对称加密算法。可以在匿名环境下双方发送隐私消息
 
 #### author: 荆哲, ttm1234
-#### version3.1
+#### version==4.0
