@@ -13,6 +13,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/jsencrypt@3.0.0-rc.1/bin/jsencrypt.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
     <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
     <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
     <!--[if lt IE 9]>
@@ -21,6 +22,9 @@
 
     <![endif]-->
     <style>
+        div {
+            overflow-wrap:break-word;
+        }
         #id-main {
             margin-left: 10px;
             margin-right: 10px;
@@ -31,8 +35,8 @@
         #id-div-placeholder {
             margin-top: 200px;
         }
-        div {
-            overflow-wrap:break-word;
+        .div-md5-value {
+            min-height: 45px;
         }
     </style>
 </head>
@@ -85,19 +89,29 @@
         <div id="id-user1" class="hidden-first">
             <input id="id-privkey" type="hidden" placeholder="私钥，隐藏不显示">
             <label for="basic-url">公钥看这里</label>
-            <div class="input-group">
-                <input id="id-pubkey" type="text" class="form-control" placeholder="正在生成公钥，请等待几秒钟" readonly="readonly" aria-describedby="basic-addon2">
-                <span class="input-group-addon" id="id-btn-copy-pub">点我复制公钥</span>
-            </div>
-            <div class="alert alert-success" role="alert">
-                请把公钥复制给对方，然后把对方加密好发你的加密文本粘贴到下面输入框里面。
-                <br>
-                复制公钥后禁止刷新页面，如果不小心刷新了就只能重新开始
+            <div class="div-md5-outer">
+                <div class="input-group">
+                    <input id="id-pubkey" type="text" class="form-control input-md5-onchange" placeholder="正在生成公钥，请等待几秒钟" readonly="readonly" aria-describedby="basic-addon2">
+                    <span class="input-group-addon" id="id-btn-copy-pub">点我复制公钥</span>
+                </div>
+                <div class="div-md5-value">
+                    这里的MD5值是 "计算中..."
+                </div>
+                <div class="alert alert-success" role="alert">
+                    请把公钥复制给对方，然后把对方加密好发你的加密文本粘贴到下面输入框里面。
+                    <br>
+                    复制公钥后禁止刷新页面，如果不小心刷新了就只能重新开始
+                </div>
             </div>
 
-            <div class="input-group">
-                <input id="id-input-undeencrypt" type="text" class="form-control" placeholder="加密后的消息粘贴到这里" aria-describedby="basic-addon2">
-                <span class="input-group-addon" id="id-btn-undeencrypt">点我解密</span>
+            <div class="div-md5-outer">
+                <div class="input-group">
+                    <input id="id-input-undeencrypt" type="text" class="form-control input-md5-onchange" placeholder="加密后的消息粘贴到这里" aria-describedby="basic-addon2">
+                    <span class="input-group-addon" id="id-btn-undeencrypt">点我解密</span>
+                </div>
+                <div class="div-md5-value">
+                    这里的MD5值是 "计算中..."
+                </div>
             </div>
 
             <div class="jumbotron div-copy-father" id="id-div-deencrypt">
@@ -116,9 +130,14 @@
 
         <div id="id-user2" class="hidden-first">
             <label for="basic-url">把收到的公钥粘贴到这里</label>
-            <div class="input-group div-clear-father">
-                <input id="input-chins-pub2" type="text" class="form-control input-clear-me" placeholder="把收到的公钥粘贴到这里" aria-describedby="basic-addon2">
-                <span class="input-group-addon" id="id-btn-clear">点我清空</span>
+            <div class="div-md5-outer">
+                <div class="input-group div-clear-father">
+                    <input id="input-chins-pub2" type="text" class="form-control input-clear-me input-md5-onchange" placeholder="把收到的公钥粘贴到这里" aria-describedby="basic-addon2">
+                    <span class="input-group-addon" id="id-btn-clear">点我清空</span>
+                </div>
+                <div class="div-md5-value">
+                    这里的MD5值是 "计算中..."
+                </div>
             </div>
 
             <label for="basic-url">输入你需要加密的消息</label>
@@ -127,11 +146,14 @@
                 <span class="input-group-addon" id="id-btn-crypt">点我加密</span>
             </div>
 
-            <div class="jumbotron div-copy-father"  id="id-div-encrypted">
+            <div class="jumbotron div-copy-father div-md5-outer"  id="id-div-encrypted">
                 <span>加密成功后将会显示在下方。点击下方按钮即可复制解密结果</span>
                 <h3 class="h1-success-msg">待加密</h3>
-                <div class="alert alert-success div-msg">
+                <div class="alert alert-success div-msg div-md5-onchange">
 
+                </div>
+                <div class="div-md5-value">
+                    这里的MD5值是 "计算中..."
                 </div>
                 <p><a class="btn btn-primary btn-lg btn-copy-div" href="javascript:void(0)" role="button">点我复制</a></p>
                 <span>请点击复制后发送给对方。</span>
@@ -275,8 +297,11 @@
         let publicKeyChinese = baseToChinese(publicKey, arr_kawayi)
         log('privateKeyChinese----\n', privateKeyChinese, '\n\n')
         log('publicKeyChinese-----\n', publicKeyChinese, '\n\n', publicKeyChinese.length)
-        document.getElementById("id-privkey").value = privateKeyChinese;
-        document.getElementById("id-pubkey").value = publicKeyChinese;
+        let elePri = $("#id-privkey")
+        let elePub = $("#id-pubkey")
+        elePri.val(privateKeyChinese);
+        elePub.val(publicKeyChinese);
+        elePub.change();
     }
 
     // =======================================================
@@ -298,7 +323,9 @@
         let div = $(strIdSeletor)
         // log('div', div)
         div.find('.h1-success-msg').first().text(success)
-        div.find('.div-msg').first().text(info)
+        let a = div.find('.div-msg').first()
+        a.text(info)
+        md5OnChange(info, a)
     }
 
     var logicDecrypt = function(privateKeyChinese, chins) {
@@ -321,9 +348,21 @@
             showDivResult('解密成功!!!!', "#id-div-deencrypt", info)
         }
     }
+    // ======================================================
+    let md5OnChange = function(s, ele) {
+        let div = ele.closest('.div-md5-outer').first().find('.div-md5-value').first()
+        let md5 = SparkMD5.hashBinary(s)
+        div.text('这里的MD5值是' + md5)
+    }
 
     // ==============绑定按钮事件进行加密解密的===================
     let bindLogic = function () {
+        $('.input-md5-onchange').change(function (event) {
+            let ele = $(event.target);
+            let s = ele.val();
+            md5OnChange(s, ele);
+        })
+
         $("#id-btn-copy-pub").click(function() {
             let pubchis = $("#id-pubkey").val().trim();
             if (pubchis === '') {
