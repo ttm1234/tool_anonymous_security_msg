@@ -3,25 +3,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#efe8dc">
+    <meta name="theme-color" content="#f4f4f2">
     <meta name="format-detection" content="telephone=no">
     <!-- https://github.com/ttm1234/tool_anonymous_security_msg -->
     <title>匿名加好友</title>
     <style>
         :root {
-            --bg: #efe8dc;
-            --paper: #fffcf7;
-            --ink: #1c1917;
-            --muted: #5e574f;
-            --faint: #8a8178;
-            --line: #ddd4c6;
-            --cinnabar: #9c3b2a;
-            --cinnabar-deep: #832f21;
-            --amber-bg: #f8f1e2;
-            --amber-ink: #6d4e16;
-            --soft: #f6f1e8;
-            --shadow: 0 1px 2px rgba(48, 36, 22, 0.04), 0 18px 40px rgba(48, 36, 22, 0.05);
-            --serif: "Iowan Old Style", Palatino, "Palatino Linotype", "Songti SC", "STSong", "SimSun", serif;
+            --bg: #f4f4f2;
+            --paper: #fff;
+            --ink: #222;
+            --muted: #5a5a5a;
+            --faint: #8d8d8d;
+            --line: #d8d8d4;
+            --accent: #1e4d8c;
+            --accent-deep: #17396a;
+            --note: #f6f3ea;
+            --note-ink: #3f3828;
+            --soft: #f6f6f4;
             --sans: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", "Segoe UI", sans-serif;
             --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
         }
@@ -40,243 +38,129 @@
             font-family: var(--sans);
             font-size: 16px;
             line-height: 1.6;
-            background-color: var(--bg);
-            background-image:
-                radial-gradient(ellipse 90% 50% at 0% -10%, rgba(255, 251, 245, 0.95), transparent 55%),
-                radial-gradient(ellipse 50% 40% at 100% 0%, rgba(176, 96, 74, 0.08), transparent 50%);
+            background: var(--bg);
             padding-left: env(safe-area-inset-left);
             padding-right: env(safe-area-inset-right);
             padding-bottom: env(safe-area-inset-bottom);
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--cinnabar);
-            z-index: 5;
-        }
-
         h1, h2, h3, p { margin: 0; }
         button { font: inherit; color: inherit; cursor: pointer; }
-        ::selection { background: #f0d2c8; color: var(--ink); }
+        ::selection { background: #d5e2f6; color: var(--ink); }
 
         .shell {
-            width: min(720px, calc(100% - 32px));
-            margin: 28px auto 64px;
+            width: min(640px, calc(100% - 28px));
+            margin: 24px auto 56px;
             overflow-wrap: anywhere;
         }
 
-        .layout {
-            display: grid;
-            gap: 32px;
-        }
-
-        .masthead {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .seal {
-            width: 52px;
-            height: 52px;
-            flex: none;
-            display: grid;
-            place-items: center;
-            border-radius: 50%;
-            border: 1.5px solid var(--cinnabar);
-            box-shadow: inset 0 0 0 4px var(--bg), inset 0 0 0 5.5px var(--cinnabar);
-            color: var(--cinnabar);
-            font-family: var(--serif);
-            font-size: 24px;
-            line-height: 1;
-        }
-
-        .eyebrow {
-            color: var(--cinnabar);
-            font-size: 13px;
-            font-weight: 600;
-        }
+        .layout { min-width: 0; }
 
         h1 {
-            margin-top: 2px;
-            font-family: var(--serif);
-            font-size: clamp(1.7rem, 4vw, 2.15rem);
-            font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: 0.04em;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
         }
 
         .lede {
-            margin-top: 16px;
-            color: #3f3a34;
+            margin-top: 8px;
+            color: #333;
             font-size: 15px;
-            line-height: 1.75;
+            line-height: 1.7;
         }
 
         .steps {
-            margin: 22px 0 0;
-            padding: 0;
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            counter-reset: step;
+            margin: 16px 0 0;
+            padding-left: 1.35em;
         }
 
         .steps li {
-            display: grid;
-            grid-template-columns: 28px minmax(0, 1fr);
-            gap: 12px;
-            align-items: start;
-        }
-
-        .steps li::before {
-            counter-increment: step;
-            content: counter(step);
-            width: 28px;
-            height: 28px;
-            border-radius: 999px;
-            background: var(--ink);
-            color: #f4efe6;
-            font-size: 13px;
-            font-weight: 600;
-            display: grid;
-            place-items: center;
-        }
-
-        .steps strong {
-            display: block;
-            font-size: 15px;
-            line-height: 1.4;
-        }
-
-        .steps p {
-            margin-top: 2px;
-            color: var(--muted);
+            margin: 0 0 8px;
+            padding-left: 2px;
+            color: #333;
             font-size: 14px;
             line-height: 1.65;
         }
+
+        .steps li:last-child { margin-bottom: 0; }
 
         .callout {
-            margin-top: 16px;
-            padding: 12px 14px;
-            border-radius: 12px;
-            background: var(--amber-bg);
-            color: var(--amber-ink);
+            margin-top: 14px;
+            padding: 8px 12px;
+            background: var(--note);
+            border-left: 3px solid #8d7340;
+            color: var(--note-ink);
             font-size: 14px;
             line-height: 1.65;
         }
 
-        .callout strong {
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        .workspace { min-width: 0; container-type: inline-size; }
+        .workspace { min-width: 0; }
 
         .workspace-label {
-            margin-bottom: 10px;
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 600;
+            margin: 26px 0 8px;
+            color: #333;
+            font-size: 14px;
         }
 
         .role-grid {
             display: grid;
-            gap: 12px;
+            gap: 8px;
         }
 
         .role-card {
             width: 100%;
             text-align: left;
             background: var(--paper);
-            border: 1px solid var(--line);
-            border-radius: 16px;
-            padding: 16px 16px 18px;
+            border: 1px solid #cfcfc8;
+            border-radius: 4px;
+            padding: 10px 12px 12px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            box-shadow: 0 1px 2px rgba(48, 36, 22, 0.03);
-            transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+            gap: 4px;
             -webkit-tap-highlight-color: transparent;
         }
 
-        .role-kicker {
-            color: var(--cinnabar);
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .role-card.is-active .role-kicker::after { content: " · 当前"; }
-
         .role-title {
-            font-family: var(--serif);
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: 0.03em;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
         }
 
         .role-desc {
             color: var(--muted);
-            font-size: 13.5px;
-            line-height: 1.55;
+            font-size: 13px;
+            line-height: 1.5;
         }
 
         .role-card.is-active {
-            border-color: var(--cinnabar);
-            background: #fff8f4;
-            box-shadow: inset 3px 0 0 var(--cinnabar);
+            border-color: var(--accent);
+            background: #f2f6fb;
         }
 
         .wait-card {
-            margin-top: 14px;
-            padding: 22px 18px;
-            border: 1px dashed #d2c6b6;
-            border-radius: 16px;
-            background: rgba(255, 252, 247, 0.55);
+            margin-top: 10px;
             color: var(--muted);
             font-size: 14px;
-            line-height: 1.65;
-        }
-
-        .wait-card strong {
-            display: block;
-            margin-bottom: 4px;
-            color: var(--ink);
-            font-weight: 600;
+            line-height: 1.6;
         }
 
         .hidden-first { display: none; }
 
         .panel {
             margin-top: 14px;
-            padding: 18px 16px 20px;
+            padding: 14px 14px 16px;
             border: 1px solid var(--line);
-            border-radius: 18px;
+            border-radius: 4px;
             background: var(--paper);
-            box-shadow: var(--shadow);
-            scroll-margin-top: 20px;
+            scroll-margin-top: 16px;
         }
 
-        .panel.is-open { animation: rise .32s ease; }
-
-        @keyframes rise {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: none; }
-        }
-
-        .panel-head { margin-bottom: 16px; }
+        .panel-head { margin-bottom: 14px; }
 
         .panel-head h2 {
-            font-family: var(--serif);
-            font-size: 1.45rem;
-            font-weight: 600;
-            letter-spacing: 0.04em;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.35;
         }
 
         .panel-head p {
@@ -289,7 +173,7 @@
         .block + .block {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 1px solid #efe6da;
+            border-top: 1px solid #ecece8;
         }
 
         label {
@@ -303,9 +187,9 @@
         input[type="text"] {
             width: 100%;
             min-width: 0;
-            border: 1px solid #ddd2c4;
+            border: 1px solid #c8c8c2;
             background: #fff;
-            border-radius: 12px;
+            border-radius: 3px;
             padding: 12px 14px;
             color: var(--ink);
             font: inherit;
@@ -339,9 +223,9 @@
 
         textarea:focus-visible,
         input[type="text"]:focus-visible {
-            outline: none;
-            border-color: var(--cinnabar);
-            box-shadow: 0 0 0 3px rgba(156, 59, 42, 0.16);
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+            border-color: var(--accent);
         }
 
         .field-actions,
@@ -351,32 +235,31 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 44px;
-            padding: 0 16px;
-            border-radius: 12px;
+            min-height: 40px;
+            padding: 0 14px;
+            border-radius: 3px;
             border: 1px solid transparent;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             -webkit-tap-highlight-color: transparent;
-            transition: background .15s ease, border-color .15s ease;
         }
 
         .btn-solid {
-            background: var(--cinnabar);
-            border-color: var(--cinnabar);
-            color: #fffaf6;
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
         }
 
         .btn-ghost {
-            background: transparent;
-            border-color: #d5cbbd;
+            background: #fff;
+            border-color: #c8c8c2;
             color: var(--ink);
         }
 
         .btn:focus-visible,
         .role-card:focus-visible {
-            outline: 2px solid var(--cinnabar);
-            outline-offset: 3px;
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
 
         .div-md5-value {
@@ -396,16 +279,14 @@
             line-height: 1.6;
         }
 
-        .hint-warn { color: var(--amber-ink); }
+        .hint-warn { color: #6d5420; }
 
         .h1-success-msg {
-            margin-top: 8px;
-            color: var(--cinnabar);
-            font-family: var(--serif);
-            font-size: 1.35rem;
-            font-weight: 600;
-            letter-spacing: 0.03em;
-            line-height: 1.3;
+            margin-top: 6px;
+            color: var(--ink);
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.4;
         }
 
         .result-lead {
@@ -418,8 +299,8 @@
             margin-top: 12px;
             min-height: 76px;
             padding: 12px 14px;
-            border: 1px solid #e6dccf;
-            border-radius: 12px;
+            border: 1px solid #e0e0dc;
+            border-radius: 3px;
             background: var(--soft);
             color: var(--ink);
             font-size: 15px;
@@ -430,7 +311,7 @@
         }
 
         .div-msg:empty::before {
-            content: "还没有结果";
+            content: "结果会显示在这里";
             color: var(--faint);
         }
 
@@ -451,200 +332,132 @@
         }
 
         @media (hover: hover) {
-            .role-card:hover { border-color: #c9b8a4; }
-            .role-card.is-active:hover { border-color: var(--cinnabar); }
-            .btn-solid:hover { background: var(--cinnabar-deep); border-color: var(--cinnabar-deep); }
+            .role-card:hover { border-color: #9a9a94; }
+            .role-card.is-active:hover { border-color: var(--accent); }
+            .btn-solid:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
             .btn-ghost:hover { background: var(--soft); }
         }
 
-        @media (max-width: 719px) {
-            .field-actions .btn,
-            .result-actions .btn { width: 100%; }
-        }
-
-        @container (min-width: 520px) {
+        @media (min-width: 560px) {
             .role-grid { grid-template-columns: 1fr 1fr; }
         }
 
-        @container (max-width: 480px) {
+        @media (max-width: 559px) {
             .field-actions .btn,
             .result-actions .btn { width: 100%; }
-        }
-
-        @media (min-width: 880px) {
-            .shell {
-                width: min(1120px, calc(100% - 64px));
-                margin-top: 40px;
-            }
-
-            .layout {
-                grid-template-columns: minmax(280px, 34%) minmax(0, 1fr);
-                gap: 0;
-                align-items: stretch;
-            }
-
-            .guide {
-                align-self: start;
-                position: sticky;
-                top: 28px;
-                max-height: calc(100vh - 48px);
-                overflow: auto;
-                padding-right: 36px;
-            }
-
-            .workspace {
-                align-self: stretch;
-                padding-left: 40px;
-                border-left: 1px solid var(--line);
-            }
-
-            .panel { padding: 22px 22px 24px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .panel.is-open { animation: none; }
         }
     </style>
 </head>
 <body>
-<div id="id-main" class="shell">
-    <div class="layout">
-        <aside class="guide">
-            <header class="masthead">
-                <div class="seal" aria-hidden="true">密</div>
-                <div>
-                    <p class="eyebrow">内容只留在这台设备上</p>
-                    <h1>匿名加好友</h1>
-                </div>
-            </header>
-            <p class="lede">在匿名群里把真实联系方式发给另一个人。旁人看得到公钥和密文，解不开原文。计算在浏览器里完成，填写的内容不会上传。</p>
-            <ol class="steps">
-                <li>
-                    <div>
-                        <strong>发公钥</strong>
-                        <p>发起人点「我来发公钥」，复制公钥发到群里。这一步之后不要刷新页面。</p>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <strong>加密回复</strong>
-                        <p>另一人点「我来加密回复」，粘贴公钥，写下要发送的内容，加密后把密文发回去。</p>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <strong>解密</strong>
-                        <p>发起人只粘贴对方发回的那一条密文再解密。别人凑热闹发来的不用管。</p>
-                    </div>
-                </li>
-            </ol>
-            <div class="callout">
-                <strong>公钥和私钥必须是这一次生成的一对</strong>
-                发起人中途刷新页面，私钥就会消失，对方已经加密的内容就解不开了，只能重新开始。
-            </div>
-        </aside>
+    <div id="id-main" class="shell">
+        <div class="layout">
+            <aside class="guide">
+                <h1>匿名加好友</h1>
+                <p class="lede">在匿名群里把真实联系方式发给另一个人。旁人看得到公钥和密文，解不开原文。计算在浏览器里完成，填写的内容不会上传。</p>
+                <ol class="steps">
+                    <li>发起人点「我来发公钥」，复制公钥发到群里。这一步之后不要刷新页面。</li>
+                    <li>另一人点「我来加密回复」，粘贴公钥，写下要发送的内容，加密后把密文发回去。</li>
+                    <li>发起人只粘贴对方发回的那一条密文再解密。别人凑热闹发来的不用管。</li>
+                </ol>
+                <p class="callout"><strong>别刷新。</strong>公钥和私钥是这一次一起生成的。发起人刷新之后私钥没了，对方已经加密的内容就解不开，只能重来。</p>
+            </aside>
 
-        <div class="workspace">
-            <p class="workspace-label">选择身份</p>
-            <div class="role-grid">
-                <button id="id-btn-for-user1" type="button" class="role-card" aria-pressed="false">
-                    <span class="role-kicker">身份 A</span>
-                    <span class="role-title">我来发公钥</span>
-                    <span class="role-desc">生成公钥发给对方，再解密对方回传的密文。</span>
-                </button>
-                <button id="id-btn-for-user2" type="button" class="role-card" aria-pressed="false">
-                    <span class="role-kicker">身份 B</span>
-                    <span class="role-title">我来加密回复</span>
-                    <span class="role-desc">用对方的公钥加密你的内容，把密文发回去。</span>
-                </button>
-            </div>
-
-            <div id="id-div-placeholder" class="wait-card">
-                <strong>还没选身份</strong>
-                点上面其中一张卡片，操作区会在这里展开。
-            </div>
-
-            <div id="id-user1" class="panel hidden-first">
-                <input id="id-privkey" type="hidden" placeholder="私钥，隐藏不显示">
-                <div class="panel-head">
-                    <h2>发起</h2>
-                    <p>把公钥发给对方。对方回传密文后，在下面解密。</p>
+            <div class="workspace">
+                <p class="workspace-label">先点一个</p>
+                <div class="role-grid">
+                    <button id="id-btn-for-user1" type="button" class="role-card" aria-pressed="false">
+                        <span class="role-title">我来发公钥</span>
+                        <span class="role-desc">生成公钥发给对方，再解密对方回传的密文。</span>
+                    </button>
+                    <button id="id-btn-for-user2" type="button" class="role-card" aria-pressed="false">
+                        <span class="role-title">我来加密回复</span>
+                        <span class="role-desc">用对方的公钥加密你的内容，把密文发回去。</span>
+                    </button>
                 </div>
 
-                <div class="block div-md5-outer">
-                    <label for="id-pubkey">你的公钥</label>
-                    <textarea id="id-pubkey" class="input-md5-onchange mono" rows="4" readonly placeholder="正在生成公钥，请等待几秒钟" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
-                    <div class="field-actions">
-                        <button id="id-btn-copy-pub" type="button" class="btn btn-solid">复制公钥</button>
+                <div id="id-div-placeholder" class="wait-card">点上面其中一个，下面才会出现输入框。</div>
+
+                <div id="id-user1" class="panel hidden-first">
+                    <input id="id-privkey" type="hidden" placeholder="私钥，隐藏不显示">
+                    <div class="panel-head">
+                        <h2>发公钥</h2>
+                        <p>把公钥发给对方。对方回传密文后，在下面解密。</p>
                     </div>
-                    <div class="div-md5-value">这里的MD5值是 "计算中..."</div>
-                    <p class="hint hint-warn">复制走之后不要刷新。刷新会丢掉私钥，只能重来。</p>
-                </div>
 
-                <div class="block div-md5-outer">
-                    <label for="id-input-undeencrypt">对方发回的密文</label>
-                    <textarea id="id-input-undeencrypt" class="input-md5-onchange mono" rows="4" placeholder="加密后的消息粘贴到这里" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
-                    <div class="field-actions">
-                        <button id="id-btn-undeencrypt" type="button" class="btn btn-solid">解密</button>
-                    </div>
-                    <div class="div-md5-value">这里的MD5值是 "计算中..."</div>
-                </div>
-
-                <div class="block result div-copy-father" id="id-div-deencrypt">
-                    <p class="result-lead">解密成功后，原文会出现在下面。</p>
-                    <h3 class="h1-success-msg">待解密</h3>
-                    <div class="div-msg"></div>
-                    <div class="result-actions">
-                        <button id="id-btn-copy-div-msg" type="button" class="btn btn-solid btn-copy-div">复制原文</button>
-                    </div>
-                    <p class="footnote">旁人只能拿到公钥和密文，这两样凑在一起也还原不了原文。</p>
-                </div>
-            </div>
-
-            <div id="id-user2" class="panel hidden-first">
-                <div class="panel-head">
-                    <h2>回复</h2>
-                    <p>粘贴对方发来的公钥，加密后把密文发回去。</p>
-                </div>
-
-                <div class="block div-md5-outer">
-                    <label for="input-chins-pub2">对方的公钥</label>
-                    <div class="div-clear-father">
-                        <textarea id="input-chins-pub2" class="input-clear-me input-md5-onchange mono" rows="4" placeholder="把收到的公钥粘贴到这里" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+                    <div class="block div-md5-outer">
+                        <label for="id-pubkey">你的公钥</label>
+                        <textarea id="id-pubkey" class="input-md5-onchange mono" rows="4" readonly placeholder="正在生成公钥，请等待几秒钟" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
                         <div class="field-actions">
-                            <button id="id-btn-clear" type="button" class="btn btn-ghost">清空</button>
+                            <button id="id-btn-copy-pub" type="button" class="btn btn-solid">复制公钥</button>
+                        </div>
+                        <div class="div-md5-value">这里的MD5值是 "计算中..."</div>
+                        <p class="hint hint-warn">复制走之后不要刷新。刷新会丢掉私钥，只能重来。</p>
+                    </div>
+
+                    <div class="block div-md5-outer">
+                        <label for="id-input-undeencrypt">对方发回的密文</label>
+                        <textarea id="id-input-undeencrypt" class="input-md5-onchange mono" rows="4" placeholder="加密后的消息粘贴到这里" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+                        <div class="field-actions">
+                            <button id="id-btn-undeencrypt" type="button" class="btn btn-solid">解密</button>
+                        </div>
+                        <div class="div-md5-value">这里的MD5值是 "计算中..."</div>
+                    </div>
+
+                    <div class="block result div-copy-father" id="id-div-deencrypt">
+                        <p class="result-lead">解密成功后，原文会出现在下面。</p>
+                        <h3 class="h1-success-msg">待解密</h3>
+                        <div class="div-msg"></div>
+                        <div class="result-actions">
+                            <button id="id-btn-copy-div-msg" type="button" class="btn btn-solid btn-copy-div">复制原文</button>
+                        </div>
+                        <p class="footnote">群里其他人拿公钥和密文对不上原文。</p>
+                    </div>
+                </div>
+
+                <div id="id-user2" class="panel hidden-first">
+                    <div class="panel-head">
+                        <h2>加密回复</h2>
+                        <p>粘贴对方发来的公钥，加密后把密文发回去。</p>
+                    </div>
+
+                    <div class="block div-md5-outer">
+                        <label for="input-chins-pub2">对方的公钥</label>
+                        <div class="div-clear-father">
+                            <textarea id="input-chins-pub2" class="input-clear-me input-md5-onchange mono" rows="4" placeholder="把收到的公钥粘贴到这里" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+                            <div class="field-actions">
+                                <button id="id-btn-clear" type="button" class="btn btn-ghost">清空</button>
+                            </div>
+                        </div>
+                        <div class="div-md5-value">这里的MD5值是 "计算中..."</div>
+                    </div>
+
+                    <div class="block">
+                        <label for="input-chins-crypt">要发送的内容</label>
+                        <textarea id="input-chins-crypt" class="input-short" rows="2" placeholder="输入你需要加密的消息" spellcheck="false" autocomplete="off"></textarea>
+                        <div class="field-actions">
+                            <button id="id-btn-crypt" type="button" class="btn btn-solid">加密</button>
                         </div>
                     </div>
-                    <div class="div-md5-value">这里的MD5值是 "计算中..."</div>
-                </div>
 
-                <div class="block">
-                    <label for="input-chins-crypt">要发送的内容</label>
-                    <textarea id="input-chins-crypt" class="input-short" rows="2" placeholder="输入你需要加密的消息" spellcheck="false" autocomplete="off"></textarea>
-                    <div class="field-actions">
-                        <button id="id-btn-crypt" type="button" class="btn btn-solid">加密</button>
+                    <div class="block result div-copy-father div-md5-outer" id="id-div-encrypted">
+                        <p class="result-lead">加密成功后，密文会出现在下面。</p>
+                        <h3 class="h1-success-msg">待加密</h3>
+                        <div class="div-msg div-md5-onchange"></div>
+                        <div class="div-md5-value">这里的MD5值是 "计算中..."</div>
+                        <div class="result-actions">
+                            <button type="button" class="btn btn-solid btn-copy-div">复制密文</button>
+                        </div>
+                        <p class="footnote">复制后发回给对方就行。</p>
                     </div>
-                </div>
-
-                <div class="block result div-copy-father div-md5-outer" id="id-div-encrypted">
-                    <p class="result-lead">加密成功后，密文会出现在下面。</p>
-                    <h3 class="h1-success-msg">待加密</h3>
-                    <div class="div-msg div-md5-onchange"></div>
-                    <div class="div-md5-value">这里的MD5值是 "计算中..."</div>
-                    <div class="result-actions">
-                        <button type="button" class="btn btn-solid btn-copy-div">复制密文</button>
-                    </div>
-                    <p class="footnote">复制密文发给对方。旁人只能拿到公钥和密文，这两样凑在一起也还原不了原文。</p>
                 </div>
             </div>
         </div>
+        <footer class="colophon">填写的内容不会上传。私钥只存在于当前页面里，关掉或刷新就没了。</footer>
     </div>
-    <footer class="colophon">填写的内容不会上传。私钥只存在于当前页面里，关掉或刷新就没了。</footer>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsencrypt@3.0.0-rc.1/bin/jsencrypt.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsencrypt@3.0.0-rc.1/bin/jsencrypt.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/spark-md5/3.0.0/spark-md5.min.js"></script>
 <script type="text/javascript">
     console.log('start!!!!')
     var log = console.log.bind(console);
